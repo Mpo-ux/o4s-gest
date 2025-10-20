@@ -1,0 +1,21 @@
+{
+  "users": [],
+  "sheets": [],
+  "sheet_rows": [],
+  "sessions": [
+    {
+      "access_token": "mock-session-token-1760737846228",
+      "refresh_token": "mock-refresh-token",
+      "expires_in": 3600,
+      "user": {
+        "id": "mock-user-123",
+        "email": "dev@localhost.com",
+        "user_metadata": {
+          "full_name": "Dev User",
+          "avatar_url": "https://api.dicebear.com/7.x/avataaars/svg?seed=dev"
+        },
+        "provider_token": "mock-google-token-abc123"
+      }
+    }
+  ]
+}
