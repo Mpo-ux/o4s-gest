@@ -1,271 +1,346 @@
-# Business Management Application
+# O4S gest v2.1 - Sistema de Gestão Empresarial Robusto
 
-Uma aplicação web full-stack para gestão empresarial com autenticação, CRUD operations, processamento de ficheiros e funcionalidades administrativas.
+![O4S gest](https://img.shields.io/badge/O4S-gest-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.1-green?style=for-the-badge)
+![Build](https://img.shields.io/badge/Build-Stable-success?style=for-the-badge)
+
+Sistema de gestão empresarial moderno e robusto, desenvolvido com React + TypeScript + Node.js, com gestão avançada de portas e módulos modulares.
 
 ## 🚀 Características Principais
 
-- **Frontend**: React + TypeScript + Vite com planeador de calendário
-- **Backend**: Node.js + Express + TypeScript com autenticação JWT
-- **Base de Dados**: PostgreSQL com Prisma ORM
-- **Autenticação**: Sistema completo com roles (Admin/User)
-- **Upload de Ficheiros**: Suporte para .pdf, .csv, .xlsx
-- **Interface Responsiva**: Tailwind CSS + Shadcn/ui
+- **Frontend**: React 18.3.1 + TypeScript + Vite 5.4.21 com calendário modular
+- **Backend**: Node.js v22.20.0 + Express 4.21.2 com autenticação JWT
+- **Gestão Robusta**: Sistema de portas avançado com fallback automático (3000→3001)
+- **Modularização**: Módulos independentes com DateCalculator integrado no Dashboard
+- **Navegação Otimizada**: Sub-header com logo reposicionado e menu hambúrguer
+- **Estado Persistente**: Zustand com rastreamento da última sessão
+- **Interface Compacta**: Banner reduzido e design responsivo com Tailwind CSS
+- **Scripts PowerShell**: Gestão ultra-robusta de servidores com múltiplas estratégias de terminação
 
 ## 📋 Módulos
 
 ### 🏠 Dashboard
-- Planeador mensal com visualização de calendário
-- Calculadora de dias entre datas
-- Visão geral do sistema
-
-### 📦 Gestão de Produtos
-- Criar, editar, visualizar e eliminar produtos
-- Import de dados via Excel/CSV
-- Gestão de stock e categorias
+- **DateCalculator Integrado**: Calendário modular completo com navegação mensal
+- **Banner Compacto**: Design otimizado com data da última sessão
+- **Rastreamento de Sessão**: Zustand store com persistência de lastSessionDate
+- **Visão Geral**: Interface centralizada para todas as funcionalidades
 
 ### 👥 Gestão de Clientes
 - CRUD completo para clientes
 - Informações de contacto e dados fiscais
-- Import/export de dados
+- Interface responsiva com navegação sub-header
 
 ### 🏢 Gestão de Fornecedores
 - Gestão completa de fornecedores
 - Dados de contacto e informações fiscais
 - Controlo de estado ativo/inativo
 
-### 🔄 Sistema RMA
-- Criação e gestão de RMAs (Return Merchandise Authorization)
-- Estados configuráveis (Pending, Approved, In Progress, etc.)
-- Upload de Excel com múltiplas abas (nomes de 4 dígitos)
-- Tracking completo de devoluções
+### � Gestão de Produtos
+- Criar, editar, visualizar e eliminar produtos
+- Gestão de stock e categorias
+- Interface modular e responsiva
 
-### ⚙️ Painel Administrativo
-- Gestão de utilizadores e permissões
-- Import de planilhas de referência
-- Detecção de duplicados na importação
-- Configurações do sistema
+### �🔄 Sistema RMA
+- Criação e gestão de RMAs (Return Merchandise Authorization)
+- Estados configuráveis e tracking completo
+- Interface integrada no sistema modular
+
+**Nota**: O módulo Calendário foi removido da navegação e integrado no Dashboard como DateCalculator para melhor modularização.
 
 ## 🛠️ Tecnologias
 
 ### Frontend
-- **React 18** - Library principal
-- **TypeScript** - Type safety
-- **Vite** - Build tool e dev server
-- **Tailwind CSS** - Styling
-- **Shadcn/ui** - Componentes UI
-- **React Query** - State management e caching
-- **React Hook Form** - Gestão de formulários
-- **Zustand** - State management global
-- **React Router** - Navegação
+- **React 18.3.1** - Library principal com componentes modulares
+- **TypeScript** - Type safety e desenvolvimento robusto
+- **Vite 5.4.21** - Build tool ultra-rápido com HMR
+- **Tailwind CSS** - Styling utilitário com design responsivo
+- **Zustand** - State management com persistência de sessão
+- **React Router** - Navegação com sub-header otimizado
 
 ### Backend
-- **Node.js** - Runtime
-- **Express** - Framework web
-- **TypeScript** - Type safety
-- **Prisma** - ORM e database migrations
-- **JWT** - Autenticação
-- **Multer** - Upload de ficheiros
-- **Bcrypt** - Hash de passwords
-- **Helmet** - Security headers
-- **CORS** - Cross-origin requests
+- **Node.js v22.20.0** - Runtime JavaScript moderna
+- **Express 4.21.2** - Framework web minimalista
+- **TypeScript** - Type safety no backend
+- **JWT** - Autenticação stateless segura
 
-### Base de Dados
-- **PostgreSQL** - Base de dados principal
-- **Prisma Client** - Database access
-- **PgAdmin** - Interface de administração
+### Gestão de Servidores
+- **PowerShell Scripts** - Gestão ultra-robusta de processos
+  - `Robust-Port-Manager.ps1` - 5 estratégias de terminação
+  - `Admin-Kill.ps1` - Terminação administrativa
+  - `Manage-Servers.ps1` - Gestão centralizada
+  - `Free-Port.ps1` - Libertação de portas
+  - `Smart-Port.ps1` - Gestão inteligente
 
-### DevOps
-- **Docker** - Containerização da base de dados
-- **npm Workspaces** - Monorepo management
-- **ESLint** - Code linting
-- **Prettier** - Code formatting
+### DevOps e Versionamento
+- **Git 2.51.1** - Controlo de versão
+- **GitHub** - Repositório remoto
+- **npm Workspaces** - Gestão de monorepo
+- **Stable Versions** - Backups v2.0 e v2.1 na pasta `stable-versions/`
 
-## 📁 Estrutura do Projeto
+## 📁 Estrutura do Projeto v2.1
 
 ```
-business-management-app/
-├── apps/
-│   ├── web/                 # Frontend React
-│   │   ├── src/
-│   │   │   ├── components/  # Componentes React
-│   │   │   ├── pages/       # Páginas da aplicação
-│   │   │   ├── hooks/       # Custom hooks
-│   │   │   ├── store/       # State management
-│   │   │   └── lib/         # Utilities
-│   │   └── package.json
-│   └── api/                 # Backend Express
-│       ├── src/
-│       │   ├── controllers/ # Route controllers
-│       │   ├── middleware/  # Express middleware
-│       │   ├── routes/      # API routes
-│       │   ├── services/    # Business logic
-│       │   └── utils/       # Utilities
-│       └── package.json
-├── packages/
-│   ├── types/              # Shared TypeScript types
-│   ├── database/           # Prisma schema e migrations
-│   └── utils/              # Shared utilities
-├── docker-compose.yml      # PostgreSQL setup
-├── package.json            # Root package.json
-└── README.md
+o4s-gest/
+├── src/
+│   ├── components/
+│   │   ├── common/          # Componentes comuns
+│   │   ├── DateCalculator.tsx # Calendário modular (era módulo Calendário)
+│   │   ├── Navigation.tsx   # Navegação com sub-header e logo reposicionado
+│   │   └── ...
+│   ├── pages/
+│   │   ├── DashboardPage.tsx # Dashboard com DateCalculator integrado
+│   │   ├── ClientsPage.tsx  # Gestão de clientes
+│   │   ├── SuppliersPage.tsx # Gestão de fornecedores
+│   │   ├── ProductsPage.tsx # Gestão de produtos
+│   │   ├── RMAPage.tsx      # Sistema RMA
+│   │   └── LoginPage.tsx    # Autenticação (branding O4S gest)
+│   ├── store/
+│   │   └── auth.ts          # Zustand store com lastSessionDate
+│   └── ...
+├── server/
+│   ├── src/
+│   │   ├── controllers/     # Controladores API
+│   │   ├── middleware/      # Middleware Express
+│   │   └── routes/          # Rotas API
+│   └── server.js            # Servidor Express 4.21.2
+├── scripts/                 # Scripts PowerShell robustos
+│   ├── Robust-Port-Manager.ps1 # Gestão ultra-robusta de portas
+│   ├── Admin-Kill.ps1       # Terminação administrativa
+│   ├── Manage-Servers.ps1   # Gestão centralizada
+│   ├── Free-Port.ps1        # Libertação de portas
+│   └── Smart-Port.ps1       # Gestão inteligente
+├── stable-versions/         # Versões estáveis de backup
+│   ├── v2.0-stable/         # Backup completo v2.0
+│   └── v2.1-stable/         # Backup completo v2.1
+├── vite.config.ts           # Configuração Vite com port 3000 e strictPort: false
+├── package.json             # Scripts robustos e dependências
+└── README.md               # Esta documentação
 ```
 
-## 🚀 Setup de Desenvolvimento
+## 🚀 Setup e Instalação
 
 ### Pré-requisitos
-- Node.js >= 18.0.0
-- npm >= 9.0.0
-- Docker (para PostgreSQL)
+- **Node.js v22.20.0** ou superior
+- **npm** para gestão de dependências
+- **Git 2.51.1** (incluído no projeto)
+- **PowerShell 5.1+** (Windows) para scripts robustos
 
-### 1. Clonar e Instalar
+### 1. Clonar Repositório
 ```bash
-git clone <repository-url>
-cd business-management-app
+git clone https://github.com/Mpo-ux/o4s-gest.git
+cd o4s-gest
+```
+
+### 2. Instalar Dependências
+```bash
 npm install
 ```
 
-### 2. Configurar Ambiente
+### 3. Desenvolvimento Local
 ```bash
-# Copiar o ficheiro de exemplo
-cp .env.example .env
+# Método preferido - usa gestão robusta de portas
+npm run dev:robust
 
-# Editar as variáveis de ambiente
-# DATABASE_URL, JWT_SECRET, etc.
-```
-
-### 3. Iniciar Base de Dados
-```bash
-# Iniciar PostgreSQL com Docker
-npm run docker:up
-
-# Aplicar schema e seed data
-npm run db:migrate
-npm run db:seed
-```
-
-### 4. Desenvolvimento
-```bash
-# Iniciar frontend e backend simultaneamente
+# Alternativo - desenvolvimento padrão
 npm run dev
 
-# Ou separadamente:
-npm run dev:web   # Frontend (http://localhost:3000)
-npm run dev:api   # Backend (http://localhost:3001)
+# Frontend apenas (porta 3000 com fallback 3001)
+npm run dev:frontend
+
+# Backend apenas
+npm run dev:backend
 ```
 
-## 📊 Base de Dados
+### 4. Gestão de Servidores (PowerShell)
+```powershell
+# Gestão centralizada de todos os servidores
+.\scripts\Manage-Servers.ps1
 
-### Schema Principal
-- **Users** - Utilizadores e autenticação
-- **Products** - Catálogo de produtos
-- **Clients** - Gestão de clientes
-- **Suppliers** - Gestão de fornecedores
-- **RMAs** - Sistema de devoluções
-- **CalendarEvents** - Eventos do planeador
+# Terminação robusta de processos em portas específicas
+.\scripts\Robust-Port-Manager.ps1
 
-### Migrações
+# Libertação inteligente de portas
+.\scripts\Smart-Port.ps1
+
+# Terminação administrativa (requer elevação)
+.\scripts\Admin-Kill.ps1
+```
+
+## ⚙️ Configuração Avançada
+
+### Gestão de Portas
+O sistema utiliza gestão inteligente de portas:
+- **Porta Principal**: 3000
+- **Porta Fallback**: 3001
+- **Configuração**: `vite.config.ts` com `strictPort: false`
+- **Scripts PowerShell**: 5 métodos de terminação robusta
+
+### Modularização
+- **DateCalculator**: Componente modular integrado no Dashboard
+- **Navigation**: Sub-header otimizado com logo e menu hambúrguer reposicionados
+- **Módulos Independentes**: Cada módulo estruturado separadamente da base
+
+### Estado da Aplicação
+- **Zustand Store**: Gestão de estado com persistência
+- **lastSessionDate**: Rastreamento automático da última sessão
+- **Banner Compacto**: Design otimizado com informações de sessão
+
+## � Scripts Disponíveis
+
+### Desenvolvimento
 ```bash
-npm run db:migrate     # Aplicar migrações
-npm run db:generate    # Gerar Prisma client
-npm run db:studio      # Abrir interface visual
+npm run dev              # Desenvolvimento padrão
+npm run dev:robust       # Desenvolvimento com gestão robusta de portas
+npm run dev:frontend     # Frontend apenas (Vite + React)
+npm run dev:backend      # Backend apenas (Express + Node.js)
 ```
 
-## 🔐 Autenticação
-
-### Utilizadores Padrão
-```
-Admin: admin@business.com / admin123
-User:  user@business.com / user123
-```
-
-### Roles e Permissões
-- **ADMIN**: Acesso completo incluindo painel administrativo
-- **USER**: Acesso a produtos, clientes, fornecedores e RMAs
-
-## 📤 Upload de Ficheiros
-
-### Formatos Suportados
-- **PDF**: Documentos gerais
-- **CSV**: Import de dados tabulares
-- **Excel (.xlsx)**: 
-  - Produtos, clientes, fornecedores
-  - RMAs com múltiplas abas (nomes de 4 dígitos)
-  - Detecção automática de duplicados
-
-### Estrutura Excel para RMAs
-```
-Abas com nomes de 4 dígitos (ex: 0001, 0002, 0003)
-Cada aba representa um RMA específico
-Sistema intercala dados baseado no nome da aba
+### Build e Produção
+```bash
+npm run build            # Build completo (Frontend + Backend)
+npm run preview          # Preview da build de produção
+npm run type-check       # Verificação de tipos TypeScript
 ```
 
-## 🌐 Deploy
+### Gestão de Servidores (PowerShell)
+```powershell
+# Scripts robustos para Windows
+.\scripts\Robust-Port-Manager.ps1  # Gestão ultra-robusta (5 métodos)
+.\scripts\Manage-Servers.ps1       # Gestão centralizada
+.\scripts\Smart-Port.ps1           # Gestão inteligente de portas
+.\scripts\Free-Port.ps1            # Libertação específica de portas
+.\scripts\Admin-Kill.ps1           # Terminação administrativa
+```
+
+### Versionamento e Backup
+```bash
+git add .                    # Staging de alterações
+git commit -m "Descrição"    # Commit local
+git push origin main         # Upload para GitHub
+
+# Restaurar versões estáveis
+cp -r stable-versions/v2.1-stable/* .  # Restaurar v2.1
+cp -r stable-versions/v2.0-stable/* .  # Restaurar v2.0
+```
+
+## 🌐 URLs e Acessos
 
 ### Desenvolvimento Local
-- Frontend: http://localhost:3000
-- Backend: http://localhost:3001
-- PgAdmin: http://localhost:8080
+- **Frontend**: http://localhost:3000 (fallback: 3001)
+- **Backend API**: http://localhost:3001/api
+- **Build Preview**: Após `npm run build && npm run preview`
 
-### Produção
-O projeto está preparado para deploy em:
-- **Vercel** (Frontend)
-- **Railway/Heroku** (Backend + Database)
-- **AWS/DigitalOcean** (VPS completo)
+### Funcionalidades Principais
+- **Dashboard**: / (com DateCalculator integrado)
+- **Clientes**: /clients
+- **Fornecedores**: /suppliers  
+- **Produtos**: /products
+- **RMAs**: /rmas
+- **Login**: /login (branding O4S gest)
 
-### Variáveis de Ambiente Produção
+## 🔄 Versões Estáveis
+
+### v2.1 (Atual) - Ultra-Robusta
+- ✅ Gestão robusta de servidores com PowerShell
+- ✅ Modularização completa (DateCalculator no Dashboard)
+- ✅ Navegação otimizada com sub-header e logo reposicionado
+- ✅ Banner compacto com rastreamento de última sessão
+- ✅ Sistema de portas avançado (3000→3001 fallback)
+- ✅ Branding completo "O4S gest"
+
+### v2.0 - Modular
+- ✅ Base modular implementada
+- ✅ Navegação restructurada
+- ✅ Componentes independentes
+- ✅ Backup disponível em `stable-versions/v2.0-stable/`
+
+### Restauração de Versões
 ```bash
-NODE_ENV=production
-DATABASE_URL=<postgresql-production-url>
-JWT_SECRET=<strong-secret-key>
-ALLOWED_ORIGINS=<production-frontend-url>
+# Para restaurar v2.1 estável
+cp -r stable-versions/v2.1-stable/* .
+npm install
+npm run dev:robust
+
+# Para restaurar v2.0
+cp -r stable-versions/v2.0-stable/* .
+npm install  
+npm run dev
 ```
 
-## 🧪 Scripts Disponíveis
+## � Troubleshooting
 
-```bash
-# Desenvolvimento
-npm run dev              # Frontend + Backend
-npm run dev:web          # Apenas frontend
-npm run dev:api          # Apenas backend
+### Problemas Comuns
 
-# Build
-npm run build            # Build completo
-npm run build:web        # Build frontend
-npm run build:api        # Build backend
+#### Porta 3000 Ocupada
+```powershell
+# Solução automática - usa script robusto
+.\scripts\Robust-Port-Manager.ps1
 
-# Base de dados
-npm run db:migrate       # Aplicar migrações
-npm run db:generate      # Gerar Prisma client
-npm run db:studio        # Interface visual
-npm run db:seed          # Popular com dados exemplo
-
-# Docker
-npm run docker:up        # Iniciar PostgreSQL
-npm run docker:down      # Parar PostgreSQL
-
-# Quality
-npm run type-check       # Verificar tipos TypeScript
-npm run lint            # Linting código
+# Solução manual
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
 ```
 
-## 🔧 Configuração Avançada
+#### Processos Node.js Zombie
+```powershell
+# Terminação ultra-robusta (5 métodos)
+.\scripts\Admin-Kill.ps1
 
-### Personalização de Roles
-Editar `packages/types/src/index.ts` para adicionar novos roles.
+# Gestão centralizada
+.\scripts\Manage-Servers.ps1
+```
 
-### Novos Módulos
-1. Criar tipos em `packages/types`
-2. Adicionar schema Prisma em `packages/database`
-3. Implementar API routes em `apps/api`
-4. Criar componentes React em `apps/web`
+#### Fallback de Portas
+- Sistema automaticamente tenta porta 3001 se 3000 estiver ocupada
+- Configurado em `vite.config.ts` com `strictPort: false`
+- Scripts PowerShell garantem libertação robusta
 
-### Processamento de Ficheiros
-Customizar lógica em `apps/api/src/services/fileService.ts`
+#### Restauração de Versão Estável
+```bash
+# Se algo correr mal, restaurar última versão estável
+cp -r stable-versions/v2.1-stable/* .
+npm install
+npm run dev:robust
+```
 
-## 📝 Licença
+### Logs e Debugging
+- Frontend: Console do navegador (F12)
+- Backend: Terminal com logs Express
+- Scripts PowerShell: Logs detalhados com timestamps
+- Vite: Logs de build e HMR em tempo real
 
-Proprietary - Todos os direitos reservados
+## 📈 Performance
 
-## 👥 Suporte
+### Build Otimizada
+- **JavaScript**: 567.66 kB (otimizado)
+- **CSS**: 42.40 kB (Tailwind CSS purged)
+- **Chunks**: Code splitting automático
+- **HMR**: Hot Module Replacement ultra-rápido
 
-Para questões técnicas ou suporte, contactar o desenvolvedor.
+### Scripts Robustos
+- **5 Métodos de Terminação**: Stop-Process, taskkill, WMIC, Get-Process, Admin elevation
+- **Retry Logic**: Múltiplas tentativas com intervalos
+- **Logging Detalhado**: Timestamps e status de cada operação
+- **Fallback Automático**: Porta 3000→3001 sem intervenção manual
+
+## 🔗 Links Úteis
+
+- **Repositório GitHub**: https://github.com/Mpo-ux/o4s-gest
+- **React Documentation**: https://react.dev/
+- **Vite Documentation**: https://vitejs.dev/
+- **Tailwind CSS**: https://tailwindcss.com/
+- **TypeScript**: https://www.typescriptlang.org/
+
+## � Licença e Suporte
+
+**Licença**: Proprietary - Todos os direitos reservados O4S Development
+
+**Suporte Técnico**: Para questões técnicas ou suporte, contactar a equipa de desenvolvimento.
+
+**Versão**: v2.1 - Sistema Ultra-Robusto com Modularização Completa
+
+**Última Atualização**: GitHub Repository - Substituição completa com 82 ficheiros e 16,354 inserções
+
+---
+
+*Desenvolvido com ❤️ pela equipa O4S Development*
