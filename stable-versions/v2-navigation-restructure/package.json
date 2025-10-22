@@ -1,0 +1,45 @@
+{
+  "name": "o4s-gest",
+  "version": "1.0.0",
+  "description": "O4S gest",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "servers:start": "powershell -ExecutionPolicy Bypass -File scripts/Manage-Servers.ps1 -Action start",
+    "servers:stop": "powershell -ExecutionPolicy Bypass -File scripts/Manage-Servers.ps1 -Action stop",
+    "servers:restart": "powershell -ExecutionPolicy Bypass -File scripts/Manage-Servers.ps1 -Action restart",
+    "servers:status": "powershell -ExecutionPolicy Bypass -File scripts/Manage-Servers.ps1 -Action status",
+    "build": "npm run build --workspaces",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:api": "npm run build --workspace=apps/api",
+    "type-check": "npm run type-check --workspaces",
+    "lint": "npm run lint --workspaces",
+    "db:generate": "npm run db:generate --workspace=packages/database",
+    "db:push": "npm run db:push --workspace=packages/database",
+    "db:migrate": "npm run db:migrate --workspace=packages/database",
+    "db:studio": "npm run db:studio --workspace=packages/database",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "setup": "npm install && npm run db:generate"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@types/xlsx": "^0.0.35",
+    "node-fetch": "^2.7.0",
+    "xlsx": "^0.18.5"
+  }
+}

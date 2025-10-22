@@ -1,0 +1,6 @@
+nome,email,telefone,empresa,nif,morada,cidade,codigoPostal,pais
+"Pedro Costa","pedro.costa@exemplo.pt","912345678","Costa & Filhos","234567890","Rua Nova, 45","Porto","4000-300","Portugal"
+"Ana Silva","ana.silva@empresa.com","923456789","Silva Comércio","345678901","Avenida da Liberdade, 123","Lisboa","1250-096","Portugal"
+"João Santos","joao.santos@gmail.com","934567890","","456789012","Rua das Flores, 67","Braga","4700-200","Portugal"
+"Maria Oliveira","maria.oliveira@outlook.pt","945678901","Oliveira & Associados","567890123","Praça da República, 89","Coimbra","3000-150","Portugal"
+"Carlos Pereira","carlos.pereira@yahoo.com","956789012","Pereira Industries","678901234","Rua Central, 234","Aveiro","3800-100","Portugal"
