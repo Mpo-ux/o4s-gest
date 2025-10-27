@@ -1,0 +1,27 @@
+.bounceDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  background: linear-gradient(to right, #3b82f6, #a21caf);
+  animation: bounce 1s infinite;
+}
+
+.delay0 {
+  animation-delay: 0s;
+}
+.delay1 {
+  animation-delay: 0.1s;
+}
+.delay2 {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.5rem);
+  }
+}

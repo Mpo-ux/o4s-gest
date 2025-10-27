@@ -1,0 +1,41 @@
+.admin-test-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.admin-test-list li {
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.admin-test-label {
+  margin-left: 8px;
+}
+.admin-test-execute-btn {
+  margin-left: 16px;
+}
+.admin-test-description {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+.admin-test-result {
+  font-weight: 600;
+}
+.admin-test-result-success {
+  color: green;
+}
+.admin-test-result-fail {
+  color: red;
+}
+.admin-test-log-container {
+  margin-top: 24px;
+}
+.admin-test-log-textarea {
+  width: 100%;
+  font-family: monospace;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}

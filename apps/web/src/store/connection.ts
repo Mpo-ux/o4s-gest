@@ -43,7 +43,7 @@ export const useConnectionStore = create<ConnectionState>((set, get) => ({
       const response = await fetch(`${API_BASE_URL}/health`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        signal: AbortSignal.timeout(5000) // 5 second timeout
+        signal: AbortSignal.timeout(10000) // 10 second timeout
       })
       
       const isConnected = response.ok

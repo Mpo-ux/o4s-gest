@@ -14,9 +14,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+  "declaration": true,
+  "declarationMap": true,
+  "sourceMap": true,
+  "jsx": "react-jsx",
+  "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./packages/types/src/*"],
@@ -24,11 +26,28 @@
       "@/database": ["./packages/database/src"]
     }
   },
-  "include": [],
+  "include": [
+    "apps/**/*",
+    "packages/**/*",
+    "stable-versions/**/*",
+    "utils/**/*",
+    "types/**/*"
+  ],
   "exclude": [
     "node_modules",
     "dist",
+    "dist-fixed",
     "build",
-    ".next"
+    ".next",
+  "stable-versions/*/dist",
+  "stable-versions/*/dist-fixed",
+  "packages/*/dist",
+  "packages/*/dist-fixed",
+  "apps/*/dist",
+  "apps/*/dist-fixed",
+  "apps/*/*.config.js",
+  "apps/api/src/*.js",
+  "apps/api/src/*.cjs",
+  "stable-versions/*/scripts/*.js"
   ]
 }

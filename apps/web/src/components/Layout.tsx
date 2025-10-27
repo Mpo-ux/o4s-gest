@@ -1,16 +1,16 @@
-import { ReactNode } from 'react'
-import { useAuthStore } from '../store/auth'
+import { ReactNode } from "react";
+import { useAuthStore } from "../store/auth";
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { user, logout } = useAuthStore()
+  const { user, logout } = useAuthStore();
 
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,10 +23,13 @@ export function Layout({ children }: LayoutProps) {
                 🏢 Business Management
               </h1>
             </div>
-            
+
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-700">
-                Olá, <span className="font-medium">{user?.name}</span>
+                Olá,{" "}
+                <span className="font-medium">
+                  {user?.email?.split("@")[0]}
+                </span>
               </span>
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                 {user?.role}
@@ -44,10 +47,8 @@ export function Layout({ children }: LayoutProps) {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          {children}
-        </div>
+        <div className="px-4 py-6 sm:px-0">{children}</div>
       </main>
     </div>
-  )
+  );
 }

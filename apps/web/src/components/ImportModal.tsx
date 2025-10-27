@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { ImportedData, FileProcessor } from '../utils/fileProcessor'
+import React, { useState } from "react";
+import { ImportedData, FileProcessor } from "../utils/fileProcessor";
 
 interface ImportModalProps {
-  isOpen: boolean
-  onClose: () => void
-  importedData: ImportedData | null
-  type: 'cliente' | 'fornecedor'
-  onConfirmImport: (data: Record<string, any>[]) => void
+  isOpen: boolean;
+  onClose: () => void;
+  importedData: ImportedData | null;
+  type: "cliente" | "fornecedor";
+  onConfirmImport: (data: Record<string, any>[]) => void;
 }
 
 export const ImportModal: React.FC<ImportModalProps> = ({
@@ -14,68 +14,114 @@ export const ImportModal: React.FC<ImportModalProps> = ({
   onClose,
   importedData,
   type,
-  onConfirmImport
+  onConfirmImport,
 }) => {
-  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set())
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [validation, setValidation] = useState<{
-    valid: Record<string, any>[]
-    invalid: { row: Record<string, any>, errors: string[] }[]
-  } | null>(null)
+    valid: Record<string, any>[];
+    invalid: { row: Record<string, any>; errors: string[] }[];
+  } | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [importResult, setImportResult] = useState<null | {
+    imported: number;
+    ignored: number;
+    total: number;
+  }>(null);
 
   React.useEffect(() => {
     if (importedData) {
-      const validationResult = FileProcessor.validateBusinessData(importedData.data, type)
-      setValidation(validationResult)
-      
-      // Selecionar automaticamente as linhas válidas
-      const validIndices = new Set<number>()
-      importedData.data.forEach((row, index) => {
-        const isValid = validationResult.valid.includes(row)
-        if (isValid) {
-          validIndices.add(index)
-        }
-      })
-      setSelectedRows(validIndices)
-    }
-  }, [importedData, type])
+      const validationResult = FileProcessor.validateBusinessData(
+        importedData.data,
+        type
+      );
+      setValidation(validationResult);
 
-  if (!isOpen || !importedData || !validation) return null
+      // Selecionar automaticamente as linhas válidas
+      const validIndices = new Set<number>();
+      importedData.data.forEach((row, index) => {
+        const isValid = validationResult.valid.includes(row);
+        if (isValid) {
+          validIndices.add(index);
+        }
+      });
+      setSelectedRows(validIndices);
+    }
+  }, [importedData, type]);
+
+  if (!isOpen || !importedData || !validation) return null;
 
   const handleSelectAll = () => {
     if (selectedRows.size === validation.valid.length) {
-      setSelectedRows(new Set())
+      setSelectedRows(new Set());
     } else {
-      const validIndices = new Set<number>()
+      const validIndices = new Set<number>();
       importedData.data.forEach((row, index) => {
-        const isValid = validation.valid.includes(row)
+        const isValid = validation.valid.includes(row);
         if (isValid) {
-          validIndices.add(index)
+          validIndices.add(index);
         }
-      })
-      setSelectedRows(validIndices)
+      });
+      setSelectedRows(validIndices);
     }
-  }
+  };
 
   const handleRowSelect = (index: number) => {
-    const newSelected = new Set(selectedRows)
+    const newSelected = new Set(selectedRows);
     if (newSelected.has(index)) {
-      newSelected.delete(index)
+      newSelected.delete(index);
     } else {
-      newSelected.add(index)
+      newSelected.add(index);
     }
-    setSelectedRows(newSelected)
-  }
+    setSelectedRows(newSelected);
+  };
 
   const handleConfirm = () => {
-    const selectedData = importedData.data.filter((_, index) => selectedRows.has(index))
-    onConfirmImport(selectedData)
-    onClose()
-  }
+    const selectedData = importedData.data.filter((_, index) =>
+      selectedRows.has(index)
+    );
+    onConfirmImport(selectedData);
+    onClose();
+  };
+
+  // Novo: Importação para API
+  const handleImportToApi = async () => {
+    setImporting(true);
+    setImportResult(null);
+    const selectedData = importedData.data.filter((_, index) =>
+      selectedRows.has(index)
+    );
+    try {
+      const res = await fetch("/api/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type,
+          data: selectedData,
+        }),
+      });
+      const result = await res.json();
+      if (res.ok) {
+        setImportResult(result);
+      } else {
+        setImportResult({
+          imported: 0,
+          ignored: 0,
+          total: selectedData.length,
+        });
+        alert(result.message || "Erro ao importar");
+      }
+    } catch (err) {
+      setImportResult({ imported: 0, ignored: 0, total: selectedData.length });
+      alert("Erro ao comunicar com API");
+    } finally {
+      setImporting(false);
+    }
+  };
 
   const getRowValidation = (row: Record<string, any>) => {
-    const invalidRow = validation.invalid.find(inv => inv.row === row)
-    return invalidRow ? invalidRow.errors : null
-  }
+    const invalidRow = validation.invalid.find((inv) => inv.row === row);
+    return invalidRow ? invalidRow.errors : null;
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -85,7 +131,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
           <div className="flex justify-between items-center">
             <div>
               <h2 className="text-2xl font-bold">
-                Importar {type === 'cliente' ? 'Clientes' : 'Fornecedores'}
+                Importar {type === "cliente" ? "Clientes" : "Fornecedores"}
               </h2>
               <p className="text-blue-100 mt-1">
                 {importedData.summary.totalRows} registos encontrados
@@ -104,15 +150,21 @@ export const ImportModal: React.FC<ImportModalProps> = ({
         <div className="p-6 border-b border-slate-200">
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-green-700">{validation.valid.length}</div>
+              <div className="text-2xl font-bold text-green-700">
+                {validation.valid.length}
+              </div>
               <div className="text-green-600">Registos Válidos</div>
             </div>
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-red-700">{validation.invalid.length}</div>
+              <div className="text-2xl font-bold text-red-700">
+                {validation.invalid.length}
+              </div>
               <div className="text-red-600">Com Erros</div>
             </div>
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
-              <div className="text-2xl font-bold text-blue-700">{selectedRows.size}</div>
+              <div className="text-2xl font-bold text-blue-700">
+                {selectedRows.size}
+              </div>
               <div className="text-blue-600">Selecionados</div>
             </div>
           </div>
@@ -121,13 +173,17 @@ export const ImportModal: React.FC<ImportModalProps> = ({
         {/* Data Table */}
         <div className="p-6 flex-1 overflow-auto">
           <div className="mb-4 flex justify-between items-center">
-            <h3 className="text-lg font-semibold text-slate-800">Dados para Importar</h3>
+            <h3 className="text-lg font-semibold text-slate-800">
+              Dados para Importar
+            </h3>
             <div className="space-x-2">
               <button
                 onClick={handleSelectAll}
                 className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg transition-colors"
               >
-                {selectedRows.size === validation.valid.length ? 'Desselecionar Todos' : 'Selecionar Válidos'}
+                {selectedRows.size === validation.valid.length
+                  ? "Desselecionar Todos"
+                  : "Selecionar Válidos"}
               </button>
             </div>
           </div>
@@ -140,16 +196,24 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                     <th className="p-3 text-left">
                       <input
                         type="checkbox"
-                        checked={selectedRows.size === validation.valid.length && validation.valid.length > 0}
+                        checked={
+                          selectedRows.size === validation.valid.length &&
+                          validation.valid.length > 0
+                        }
                         onChange={handleSelectAll}
                         className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                         aria-label="Selecionar todos os registos válidos"
                         title="Selecionar/Desselecionar todos"
                       />
                     </th>
-                    <th className="p-3 text-left text-slate-700 font-medium">Status</th>
-                    {importedData.headers.map(header => (
-                      <th key={header} className="p-3 text-left text-slate-700 font-medium">
+                    <th className="p-3 text-left text-slate-700 font-medium">
+                      Status
+                    </th>
+                    {importedData.headers.map((header) => (
+                      <th
+                        key={header}
+                        className="p-3 text-left text-slate-700 font-medium"
+                      >
                         {header}
                       </th>
                     ))}
@@ -157,15 +221,15 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                 </thead>
                 <tbody>
                   {importedData.data.map((row, index) => {
-                    const errors = getRowValidation(row)
-                    const isValid = !errors
-                    const isSelected = selectedRows.has(index)
+                    const errors = getRowValidation(row);
+                    const isValid = !errors;
+                    const isSelected = selectedRows.has(index);
 
                     return (
-                      <tr 
-                        key={index} 
+                      <tr
+                        key={index}
                         className={`border-b border-slate-100 hover:bg-slate-50 ${
-                          !isValid ? 'bg-red-25' : ''
+                          !isValid ? "bg-red-25" : ""
                         }`}
                       >
                         <td className="p-3">
@@ -190,13 +254,13 @@ export const ImportModal: React.FC<ImportModalProps> = ({
                             </span>
                           )}
                         </td>
-                        {importedData.headers.map(header => (
+                        {importedData.headers.map((header) => (
                           <td key={header} className="p-3 text-slate-700">
-                            {row[header] || '-'}
+                            {row[header] || "-"}
                           </td>
                         ))}
                       </tr>
-                    )
+                    );
                   })}
                 </tbody>
               </table>
@@ -206,10 +270,15 @@ export const ImportModal: React.FC<ImportModalProps> = ({
           {/* Error Details */}
           {validation.invalid.length > 0 && (
             <div className="mt-6">
-              <h4 className="text-lg font-semibold text-red-700 mb-3">Erros Encontrados</h4>
+              <h4 className="text-lg font-semibold text-red-700 mb-3">
+                Erros Encontrados
+              </h4>
               <div className="space-y-2 max-h-40 overflow-y-auto">
                 {validation.invalid.map((item, index) => (
-                  <div key={index} className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <div
+                    key={index}
+                    className="bg-red-50 border border-red-200 rounded-lg p-3"
+                  >
                     <div className="font-medium text-red-800">
                       Linha {importedData.data.indexOf(item.row) + 2}
                     </div>
@@ -227,28 +296,48 @@ export const ImportModal: React.FC<ImportModalProps> = ({
 
         {/* Footer */}
         <div className="border-t border-slate-200 p-6 bg-slate-50">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-slate-600">
-              {selectedRows.size} de {validation.valid.length} registos válidos selecionados
+              {selectedRows.size} de {validation.valid.length} registos válidos
+              selecionados
             </div>
-            <div className="space-x-3">
+            <div className="space-x-3 flex items-center">
               <button
                 onClick={onClose}
                 className="px-6 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+                disabled={importing}
               >
                 Cancelar
               </button>
               <button
                 onClick={handleConfirm}
-                disabled={selectedRows.size === 0}
+                disabled={selectedRows.size === 0 || importing}
                 className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
-                Importar {selectedRows.size} Registos
+                Importar Localmente
+              </button>
+              <button
+                onClick={handleImportToApi}
+                disabled={selectedRows.size === 0 || importing}
+                className="px-6 py-2 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-lg hover:from-green-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                {importing ? "A importar..." : "Atualizar no Supabase"}
               </button>
             </div>
           </div>
+          {/* Feedback visual após importação */}
+          {importResult && (
+            <div className="mt-4 text-center text-green-700 font-semibold">
+              Importação de {importResult.imported} concluída com sucesso!
+              {importResult.ignored > 0 && (
+                <span className="ml-2 text-yellow-700 font-normal">
+                  {importResult.ignored} registos ignorados (duplicados).
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

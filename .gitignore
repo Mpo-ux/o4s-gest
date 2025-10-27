@@ -46,3 +46,21 @@ logs/
 
 # ESLint
 .eslintcache
+
+# Vite
+.vite/
+
+# Coverage
+coverage/
+
+# pnpm
+pnpm-lock.yaml
+
+# Storybook
+storybook-static/
+
+# Playwright
+playwright-report/
+
+# Cypress
+cypress/

@@ -1,36 +1,36 @@
-import React, { useState } from 'react'
-import { useAuthStore } from '../store/auth'
+import React, { useState } from "react";
+import { useAuthStore } from "../store/auth";
 
 export function LoginPage() {
-  const { login } = useAuthStore()
+  const { login, isSupabaseMode } = useAuthStore();
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  })
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+    email: "",
+    password: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     try {
-      await login(formData.email, formData.password, rememberMe)
+      await login(formData.email, formData.password, rememberMe);
     } catch (error) {
-      setError('Credenciais inválidas. Verifique o email e password.')
+      setError("Credenciais inválidas. Verifique o email e password.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-grid-slate-700/25 bg-[size:50px_50px] opacity-20"></div>
-      
+
       <div className="relative max-w-md w-full space-y-8">
         {/* Logo and Header */}
         <div className="text-center">
@@ -44,13 +44,16 @@ export function LoginPage() {
             Faça login para aceder à aplicação
           </p>
         </div>
-        
+
         {/* Login Form */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-semibold text-slate-200 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-slate-200 mb-2"
+                >
                   Email
                 </label>
                 <input
@@ -62,12 +65,17 @@ export function LoginPage() {
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
                   placeholder="seu.email@empresa.pt"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="password" className="block text-sm font-semibold text-slate-200 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-slate-200 mb-2"
+                >
                   Password
                 </label>
                 <div className="relative">
@@ -80,16 +88,20 @@ export function LoginPage() {
                     className="w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
                     placeholder="••••••••"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors"
-                    title={showPassword ? 'Ocultar password' : 'Mostrar password'}
+                    title={
+                      showPassword ? "Ocultar password" : "Mostrar password"
+                    }
                   >
                     <span className="text-lg">
-                      {showPassword ? '🙈' : '👁️'}
+                      {showPassword ? "🙈" : "👁️"}
                     </span>
                   </button>
                 </div>
@@ -139,6 +151,28 @@ export function LoginPage() {
                 )}
               </button>
             </div>
+
+            {/* Mode Toggle */}
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-slate-300 text-sm">
+                  Modo de autenticação:
+                </span>
+                <span
+                  className={`text-sm font-medium ${
+                    isSupabaseMode ? "text-green-400" : "text-blue-400"
+                  }`}
+                >
+                  🌐 Supabase (Always On)
+                </span>
+              </div>
+              {isSupabaseMode && (
+                <p className="text-xs text-slate-400 mt-2 text-center">
+                  ℹ️ Configure o Supabase seguindo as instruções em
+                  SUPABASE_SETUP.md
+                </p>
+              )}
+            </div>
           </form>
         </div>
 
@@ -150,5 +184,5 @@ export function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
